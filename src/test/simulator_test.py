@@ -10,12 +10,7 @@ import datetime
 from datetime import datetime
 
 import simulator
-sys.path.append('/Users/bhargavidwivedi/Documents/Research/Mirage/src/sim')
 import simparser
-# from simparser import .load_slurm_config
-
-# from parser_log import *
-
 import job
 from simulator import StateInput
 from datetime import timedelta
@@ -25,7 +20,8 @@ import pickle
 
 class SimulatorTestCase(unittest.TestCase):
     def test_basic(self):
-        job_log = "./test_data/filtered-longhorn-v100.log"
+
+        job_log = "/Users/bhargavidwivedi/Documents/Research/Mirage/data/longhorn-v100.log"
         slurm_config = "./test_data/slurm_config.json"
         backfill_config = "./test_data/backfill_config.json"
         slurm_config = simparser.SimParser.load_slurm_config(slurm_config)
@@ -33,11 +29,20 @@ class SimulatorTestCase(unittest.TestCase):
         simulator_tmp = simulator.Simulator()
         simulator_tmp.load_jobs(job_log)
         start_time = datetime.strptime("2019-11-04T17:20:00", "%Y-%m-%dT%H:%M:%S")
+        # print("//////////////////////////////////////////////////////////////",slurm_config)
+        # print("//////////////////////////////////////////////////////////////",start_time)
+        # print("//////////////////////////////////////////////////////////////",backfill_config)
+
         simulator_tmp.init_scheduler(88, slurm_config, start_time, backfill_config)
-        simulator_tmp.submit_job_internal(["2", "3", "4", "5"])
+        # print("//////////////////////////////////////////////////////////////",slurm_config)
+        # print("//////////////////////////////////////////////////////////////",start_time)
+        # print("//////////////////////////////////////////////////////////////",backfill_config)
+
+        simulator_tmp.submit_job_internal(["27058", "27100", "27034", "27063"])
         simulator_tmp.run_end()
         print("------------------------------------------Job Logs-----------------------------------------------------")
         for item in simulator_tmp.job_completion_logs:
+            print("HEREEEEEEEEEEEEEE1")
             print("Job ID: {0}, Job Submit: {1}, Job Start: {2}, Job End: {3}, Job Nodes: {4}".format(item.job.job_id,
                                                                                                       item.job.submit,
                                                                                                       item.start,
@@ -57,6 +62,7 @@ class SimulatorTestCase(unittest.TestCase):
         slurm_config = simparser.SimParser.load_slurm_config(slurm_config)
         backfill_config = simparser.SimParser.load_backfill_config(backfill_config)
         simulator_tmp = simulator.Simulator()
+        print("gfbhnjjyhegtfdcwxsxcvbgthnyjmu,i.i,kmjynhtbgrvfcdxswervtbnymu,kmjnhbgvfcd", vars(simulator_tmp))
         start_time = datetime.strptime("2019-11-04T17:20:00", "%Y-%m-%dT%H:%M:%S")
         simulator_tmp.init_scheduler(88, slurm_config, start_time, backfill_config)
         simulator_tmp.submit_job_external([job_1, job_2, job_3])
@@ -93,8 +99,8 @@ class SimulatorTestCase(unittest.TestCase):
 
         slurm_config = "./test_data/slurm_config.json"
         backfill_config = "./test_data/backfill_config.json"
-        slurm_config = load_slurm_config(slurm_config)
-        backfill_config = load_backfill_config(backfill_config)
+        slurm_config = simparser.SimParser.load_slurm_config(slurm_config)
+        backfill_config = simparser.SimParser.load_backfill_config(backfill_config)
         simulator_tmp = simulator.Simulator()
         simulator_tmp.init_scheduler(88, slurm_config, curr_time, backfill_config)
 
@@ -104,7 +110,7 @@ class SimulatorTestCase(unittest.TestCase):
 
     def test_longhorn_two_days(self):
         logging.basicConfig(format='%(asctime)s - %(levelname)s: %(message)s', level=logging.INFO)
-        job_log = "./test_data/filtered-longhorn-v100.log"
+        job_log = "/Users/bhargavidwivedi/Documents/Research/Mirage/data/longhorn-v100.log"
         slurm_config = "./test_data/slurm_config.json"
         backfill_config = "./test_data/backfill_config.json"
         slurm_config = simparser.SimParser.load_slurm_config(slurm_config)
@@ -138,7 +144,7 @@ class SimulatorTestCase(unittest.TestCase):
 
     def test_run_time(self):
         logging.basicConfig(format='%(asctime)s - %(levelname)s: %(message)s', level=logging.INFO)
-        job_log = "./test_data/filtered-longhorn-v100.log"
+        job_log = "/Users/bhargavidwivedi/Documents/Research/Mirage/data/longhorn-v100.log"
         slurm_config = "./test_data/slurm_config.json"
         backfill_config = "./test_data/backfill_config.json"
         slurm_config = simparser.SimParser.load_slurm_config(slurm_config)
@@ -172,7 +178,7 @@ class SimulatorTestCase(unittest.TestCase):
                 "---------------------------------------------------------------------------------------------------")
 
     def test_submit_job_dependency(self):
-        job_log = "./test_data/filtered-longhorn-v100.log"
+        job_log = "/Users/bhargavidwivedi/Documents/Research/Mirage/data/longhorn-v100.log"
         slurm_config = "./test_data/slurm_config.json"
         backfill_config = "./test_data/backfill_config.json"
         slurm_config = simparser.SimParser.load_slurm_config(slurm_config)
